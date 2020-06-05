@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: url(light-gray-woolen.png);
+        /* Цвет фона и путь к файлу */
+    }
+</style>
+
+<body>
+    <h1>Коллекция оценки тональности</h1>
+    <a href="index.html"><button type="button" class="btn btn-outline-secondary">Назад</button></a>
+    <br>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Название новости</th>
+                <th>Оценка тональности</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <script>
+        // Получение всех пользователей
+        function GetTonality() {
+            $.ajax({
+                url: "/Tonality",
+                type: "GET",
+                contentType: "application/json",
+                success: function(Tonality) {
+                    var rows = "";
+                    $.each(Tonality, function(index, Ton) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(Ton);
+                    })
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+
+        // создание строки для таблицы
+        var row = function(Ton) {
+            return "<tr data-rowid='" + Ton._id + "'><td>" + Ton.Header + "</td>" +
+                "<td>" + Ton.Tonality + "</td>";
+        }
+
+        GetTonality();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Коллекция предложений и униграмм</h1>
+    <a href="index.html"><button type="button" class="btn btn-outline-secondary">Назад</button></a>
+    <br>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Униграмма</th>
+                <th>Предложение</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <script>
+        // Получение всех пользователей
+        function GetPersonsAttractions() {
+            $.ajax({
+                url: "/PersonsAttractions",
+                type: "GET",
+                contentType: "application/json",
+                success: function(PersonsAttractions) {
+                    var rows = "";
+                    $.each(PersonsAttractions, function(index, PersonAttraction) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(PersonAttraction);
+                    })
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+
+        // создание строки для таблицы
+        var row = function(PersonAttraction) {
+            return "<tr data-rowid='" + PersonAttraction._id + "'><td>" + PersonAttraction.Unigrams + "</td>" +
+                "<td>" + PersonAttraction.Sentence + "</td>";
+        }
+
+        GetPersonsAttractions();
+    </script>
+</body>
+
+</html>

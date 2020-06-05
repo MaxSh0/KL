@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Коллекция новостей</h1>
+    <a href="index.html"><button type="button" class="btn btn-outline-secondary">Назад</button></a>
+    <br>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Время публикации</th>
+                <th>Ссылка</th>
+                <th>Текст новости</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+
+
+    <script>
+        // Получение всех пользователей
+        function GetNews() {
+            $.ajax({
+                url: "/News",
+                type: "GET",
+                contentType: "application/json",
+                success: function(News) {
+                    var rows = "";
+                    $.each(News, function(index, New) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(New);
+                    })
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+
+        // создание строки для таблицы
+        var row = function(New) {
+            return "<tr data-rowid='" + New._id + "'><td>" + New.Header + "</td>" +
+                "<td>" + New.Time + "</td> <td>" + New.Link + "</td>" +
+                "<td>" + New.Text + "</td>";
+        }
+
+        GetNews();
+    </script>
+</body>
+
+</html>
