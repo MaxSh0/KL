@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+import warnings
+import re
+warnings.filterwarnings('ignore')
 
 # Подключаемся к базе данных
 client = MongoClient()
@@ -34,8 +37,12 @@ def get_content(html):
             'Link':HOST + item.find('a').findNext('a').get('href'),
             'Text': get_main_text(HOST + item.find('a').findNext('a').get('href'))
         }
+        if(db.News.find({'Header':new['Header']}).count() == 0): #Записываем новость в БД только если новости с таким заголовком еще нет
+            {
+                db.News.insert_one(new)
+            }
 
-        db.News.insert_one(new)
+
 
 
 # Функция которая возвращает текст новости со страницы
@@ -46,7 +53,13 @@ def get_main_text(URL):
     text = ''
     for i in range(1,len(AllText)-1):
         text += AllText[i].get_text(strip=True)+' '
-    return text
+    #Разбиваем текст на отдельные предложения
+    split_regex = re.compile(r'[.|!|?|…|:]')
+    text = filter(lambda t: t, [t.strip() for t in split_regex.split(text)])
+    sents = []
+    for s in text:
+        sents.append(s);
+    return sents
 
 # функция парсинга
 def parse():
