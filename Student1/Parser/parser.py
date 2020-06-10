@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 import warnings
-import re
+from nltk.tokenize import sent_tokenize
+
 warnings.filterwarnings('ignore')
 
 # Подключаемся к базе данных
@@ -54,12 +55,8 @@ def get_main_text(URL):
     for i in range(1,len(AllText)-1):
         text += AllText[i].get_text(strip=True)+' '
     #Разбиваем текст на отдельные предложения
-    split_regex = re.compile(r'[.|!|?|…|:]')
-    text = filter(lambda t: t, [t.strip() for t in split_regex.split(text)])
-    sents = []
-    for s in text:
-        sents.append(s);
-    return sents
+    sentences = sent_tokenize(text)
+    return sentences
 
 # функция парсинга
 def parse():
