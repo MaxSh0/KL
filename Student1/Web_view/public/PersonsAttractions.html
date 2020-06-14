@@ -16,7 +16,8 @@
     <table class="table table-condensed table-striped table-bordered">
         <thead>
             <tr>
-                <th>Униграмма</th>
+                <th>Униграмма известной личности</th>
+                <th>Униграмма достопримечательности</th>
                 <th>Предложение</th>
             </tr>
         </thead>
@@ -45,8 +46,8 @@
 
         // создание строки для таблицы
         var row = function(PersonAttraction) {
-            return "<tr data-rowid='" + PersonAttraction._id + "'><td>" + PersonAttraction.Unigrams + "</td>" +
-                "<td>" + PersonAttraction.Sentence + "</td>";
+            return "<tr data-rowid='" + PersonAttraction._id + "'><td>" + PersonAttraction.Persona + "</td>" + "<td>" + PersonAttraction.Attraction +
+                "</td>" + "<td>" + PersonAttraction.Text + "</td>";
         }
 
         GetPersonsAttractions();

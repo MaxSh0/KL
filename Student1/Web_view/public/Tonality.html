@@ -22,7 +22,7 @@
     <table class="table table-condensed table-striped table-bordered">
         <thead>
             <tr>
-                <th>Название новости</th>
+                <th>Текст предложения</th>
                 <th>Оценка тональности</th>
             </tr>
         </thead>
@@ -51,7 +51,7 @@
 
         // создание строки для таблицы
         var row = function(Ton) {
-            return "<tr data-rowid='" + Ton._id + "'><td>" + Ton.Header + "</td>" +
+            return "<tr data-rowid='" + Ton._id + "'><td>" + Ton.Text + "</td>" +
                 "<td>" + Ton.Tonality + "</td>";
         }
 
