@@ -1,0 +1,9 @@
+import "base.proto";
+import "facttypes_base.proto";
+
+message Fact: NFactType.TFact
+{
+	optional string PersonName = 1;
+	optional string Attractions = 2;
+}
+
